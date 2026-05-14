@@ -6,7 +6,7 @@
     <title>Prompt Studio</title>
     <meta
       name="description"
-      content="Prompt Studio aide à créer des prompts structurés et prêts à copier pour vos outils d'IA."
+      content="Prompt Studio aide à créer, enrichir et copier des prompts structurés pour vos outils d'IA."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -16,91 +16,155 @@
         <p class="eyebrow">Générateur de prompts</p>
         <h1 id="app-title">Créez des prompts clairs en quelques secondes.</h1>
         <p class="hero__text">
-          Décrivez votre besoin, choisissez un ton et laissez Prompt Studio assembler
+          Décrivez votre besoin, choisissez un modèle et laissez Prompt Studio assembler
           un prompt complet, structuré et facile à personnaliser.
         </p>
+        <div class="hero__stats" aria-label="Avantages de Prompt Studio">
+          <span>6 modèles prêts à l'emploi</span>
+          <span>Score qualité instantané</span>
+          <span>Historique local</span>
+        </div>
       </section>
 
       <section class="workspace" aria-label="Créateur de prompt">
         <form class="prompt-form" id="prompt-form">
-          <div class="field-group">
-            <label for="objective">Objectif principal</label>
-            <textarea
-              id="objective"
-              name="objective"
-              rows="4"
-              placeholder="Ex. Rédiger une page de vente pour un nouveau coaching sportif"
-              required
-            ></textarea>
-          </div>
-
-          <div class="grid-two">
-            <div class="field-group">
-              <label for="audience">Audience</label>
-              <input
-                id="audience"
-                name="audience"
-                type="text"
-                placeholder="Ex. entrepreneurs débutants"
-              />
+          <div class="form-section">
+            <div>
+              <p class="eyebrow">Étape 1</p>
+              <h2>Choisir un modèle</h2>
             </div>
-
-            <div class="field-group">
-              <label for="tone">Ton souhaité</label>
-              <select id="tone" name="tone">
-                <option value="professionnel et précis">Professionnel</option>
-                <option value="créatif et inspirant">Créatif</option>
-                <option value="simple et pédagogique">Pédagogique</option>
-                <option value="convaincant et direct">Persuasif</option>
-                <option value="chaleureux et empathique">Empathique</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid-two">
-            <div class="field-group">
-              <label for="format">Format de sortie</label>
-              <select id="format" name="format">
-                <option value="une réponse structurée avec titres et listes à puces">Réponse structurée</option>
-                <option value="un plan détaillé étape par étape">Plan détaillé</option>
-                <option value="un tableau comparatif clair">Tableau comparatif</option>
-                <option value="un script prêt à utiliser">Script</option>
-                <option value="une checklist actionnable">Checklist</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="language">Langue</label>
-              <select id="language" name="language">
-                <option value="français">Français</option>
-                <option value="anglais">Anglais</option>
-                <option value="espagnol">Espagnol</option>
-                <option value="allemand">Allemand</option>
-              </select>
+            <div class="template-grid" id="template-grid" role="radiogroup" aria-label="Modèles de prompt">
+              <label class="template-card">
+                <input type="radio" name="template" value="marketing" checked />
+                <span>Marketing</span>
+                <small>Campagnes, pages de vente, emails</small>
+              </label>
+              <label class="template-card">
+                <input type="radio" name="template" value="strategy" />
+                <span>Stratégie</span>
+                <small>Plans d'action, diagnostics, décisions</small>
+              </label>
+              <label class="template-card">
+                <input type="radio" name="template" value="coding" />
+                <span>Code</span>
+                <small>Développement, revue, debugging</small>
+              </label>
+              <label class="template-card">
+                <input type="radio" name="template" value="learning" />
+                <span>Apprentissage</span>
+                <small>Cours, exercices, explications</small>
+              </label>
+              <label class="template-card">
+                <input type="radio" name="template" value="analysis" />
+                <span>Analyse</span>
+                <small>Synthèse, comparaison, recherche</small>
+              </label>
+              <label class="template-card">
+                <input type="radio" name="template" value="creative" />
+                <span>Créatif</span>
+                <small>Idées, storytelling, scripts</small>
+              </label>
             </div>
           </div>
 
-          <div class="field-group">
-            <label for="context">Contexte utile</label>
-            <textarea
-              id="context"
-              name="context"
-              rows="3"
-              placeholder="Ex. mon offre coûte 149 €, lancement prévu dans 2 semaines"
-            ></textarea>
+          <div class="form-section">
+            <div>
+              <p class="eyebrow">Étape 2</p>
+              <h2>Décrire le besoin</h2>
+            </div>
+            <div class="field-group">
+              <label for="objective">Objectif principal</label>
+              <textarea
+                id="objective"
+                name="objective"
+                rows="4"
+                placeholder="Ex. Rédiger une page de vente pour un nouveau coaching sportif"
+                required
+              ></textarea>
+            </div>
+
+            <div class="grid-two">
+              <div class="field-group">
+                <label for="audience">Audience</label>
+                <input
+                  id="audience"
+                  name="audience"
+                  type="text"
+                  placeholder="Ex. entrepreneurs débutants"
+                />
+              </div>
+
+              <div class="field-group">
+                <label for="tone">Ton souhaité</label>
+                <select id="tone" name="tone">
+                  <option value="professionnel et précis">Professionnel</option>
+                  <option value="créatif et inspirant">Créatif</option>
+                  <option value="simple et pédagogique">Pédagogique</option>
+                  <option value="convaincant et direct">Persuasif</option>
+                  <option value="chaleureux et empathique">Empathique</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-two">
+              <div class="field-group">
+                <label for="format">Format de sortie</label>
+                <select id="format" name="format">
+                  <option value="une réponse structurée avec titres et listes à puces">Réponse structurée</option>
+                  <option value="un plan détaillé étape par étape">Plan détaillé</option>
+                  <option value="un tableau comparatif clair">Tableau comparatif</option>
+                  <option value="un script prêt à utiliser">Script</option>
+                  <option value="une checklist actionnable">Checklist</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="language">Langue</label>
+                <select id="language" name="language">
+                  <option value="français">Français</option>
+                  <option value="anglais">Anglais</option>
+                  <option value="espagnol">Espagnol</option>
+                  <option value="allemand">Allemand</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="context">Contexte utile</label>
+              <textarea
+                id="context"
+                name="context"
+                rows="3"
+                placeholder="Ex. mon offre coûte 149 €, lancement prévu dans 2 semaines"
+              ></textarea>
+            </div>
+
+            <div class="grid-two">
+              <div class="field-group">
+                <label for="constraints">Contraintes ou éléments à éviter</label>
+                <input
+                  id="constraints"
+                  name="constraints"
+                  type="text"
+                  placeholder="Ex. éviter le jargon, rester sous 800 mots"
+                />
+              </div>
+              <div class="field-group">
+                <label for="must-have">Éléments indispensables</label>
+                <input
+                  id="must-have"
+                  name="mustHave"
+                  type="text"
+                  placeholder="Ex. inclure 3 exemples et un appel à l'action"
+                />
+              </div>
+            </div>
           </div>
 
-          <div class="field-group">
-            <label for="constraints">Contraintes ou éléments à éviter</label>
-            <input
-              id="constraints"
-              name="constraints"
-              type="text"
-              placeholder="Ex. éviter le jargon, rester sous 800 mots"
-            />
+          <div class="actions">
+            <button class="primary-button" type="submit">Générer mon prompt</button>
+            <button class="ghost-button" id="reset-button" type="button">Réinitialiser</button>
           </div>
-
-          <button class="primary-button" type="submit">Générer mon prompt</button>
         </form>
 
         <aside class="result-card" aria-labelledby="result-title">
@@ -111,8 +175,28 @@
             </div>
             <button class="secondary-button" id="copy-button" type="button">Copier</button>
           </div>
+
+          <div class="quality-card" aria-live="polite">
+            <div>
+              <span class="quality-card__label">Score qualité</span>
+              <strong id="quality-score">0%</strong>
+            </div>
+            <div class="quality-meter" aria-hidden="true">
+              <span id="quality-meter-fill"></span>
+            </div>
+            <p id="quality-tip">Ajoutez un objectif pour évaluer votre prompt.</p>
+          </div>
+
           <pre id="prompt-output" class="prompt-output" aria-live="polite">Remplissez le formulaire puis cliquez sur « Générer mon prompt ».</pre>
           <p class="copy-status" id="copy-status" role="status"></p>
+
+          <div class="history-panel">
+            <div class="history-panel__header">
+              <h3>Historique</h3>
+              <button class="link-button" id="clear-history" type="button">Effacer</button>
+            </div>
+            <ul id="history-list" class="history-list" aria-label="Prompts récemment générés"></ul>
+          </div>
         </aside>
       </section>
     </main>
