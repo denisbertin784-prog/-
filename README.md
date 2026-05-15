@@ -1,10 +1,10 @@
-# Prompt Studio
+# Briques 3D
 
-Prompt Studio est une application web statique en français pour créer des prompts structurés, réutilisables et prêts à copier pour vos outils d'IA.
+Briques 3D est un mini jeu web statique en français inspiré des briques LEGO. Il permet de construire une scène en 3D directement dans le navigateur.
 
 ## Lancer en local
 
-Aucune dépendance n'est nécessaire. Servez simplement le dossier avec un serveur statique :
+Aucune étape de build n'est nécessaire. Servez simplement le dossier avec un serveur statique :
 
 ```bash
 python3 -m http.server 4173
@@ -14,11 +14,11 @@ Ouvrez ensuite <http://localhost:4173> dans votre navigateur.
 
 ## Fonctionnalités
 
-- Formulaire guidé pour décrire un objectif, une audience, un contexte et des contraintes.
-- 6 modèles de prompts : marketing, stratégie, code, apprentissage, analyse et créatif.
-- Sélection du ton, du format et de la langue de sortie.
-- Génération d'un prompt détaillé avec rôle, mission, angle de travail et consignes de réponse.
-- Score qualité instantané pour savoir si le prompt contient assez de contexte.
-- Historique local des 5 derniers prompts générés avec restauration en un clic.
-- Bouton de copie vers le presse-papiers.
-- Interface responsive pour ordinateur et mobile.
+- Plateau 3D en CSS avec rotation de vue au glisser, zoom à la molette et ombres dynamiques.
+- Pose de briques sur une grille avec empilement automatique par niveau.
+- 4 tailles de briques : 1 × 1, 1 × 2, 2 × 2 et 4 × 2.
+- Palette de 6 couleurs et rotation des briques à 0° ou 90°.
+- Mode suppression pour retirer une brique ciblée.
+- Missions de construction : nombre de briques, hauteur et variété de couleurs.
+- Sauvegarde et chargement de la construction via `localStorage`.
+- Interface responsive pour ordinateur, tablette et mobile.

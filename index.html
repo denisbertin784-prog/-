@@ -3,204 +3,106 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Prompt Studio</title>
+    <title>Briques 3D — Jeu de construction LEGO</title>
     <meta
       name="description"
-      content="Prompt Studio aide à créer, enrichir et copier des prompts structurés pour vos outils d'IA."
+      content="Un mini jeu de construction LEGO en 3D : posez, colorez, pivotez et supprimez des briques sur une grille interactive."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <section class="hero" aria-labelledby="app-title">
-        <p class="eyebrow">Générateur de prompts</p>
-        <h1 id="app-title">Créez des prompts clairs en quelques secondes.</h1>
-        <p class="hero__text">
-          Décrivez votre besoin, choisissez un modèle et laissez Prompt Studio assembler
-          un prompt complet, structuré et facile à personnaliser.
-        </p>
-        <div class="hero__stats" aria-label="Avantages de Prompt Studio">
-          <span>6 modèles prêts à l'emploi</span>
-          <span>Score qualité instantané</span>
-          <span>Historique local</span>
+    <main class="game-shell">
+      <section class="hero" aria-labelledby="game-title">
+        <div>
+          <p class="eyebrow">Mini jeu créatif</p>
+          <h1 id="game-title">Construisez votre monde LEGO en 3D.</h1>
+          <p class="hero__text">
+            Choisissez une couleur, une taille de brique, puis cliquez sur la plateforme
+            pour empiler vos constructions. Tournez la caméra, relevez des défis et
+            sauvegardez votre création dans le navigateur.
+          </p>
+        </div>
+        <div class="score-card" aria-live="polite">
+          <span class="score-card__label">Briques posées</span>
+          <strong id="brick-count">0</strong>
+          <span id="goal-label">Objectif : Maison arc-en-ciel</span>
         </div>
       </section>
 
-      <section class="workspace" aria-label="Créateur de prompt">
-        <form class="prompt-form" id="prompt-form">
-          <div class="form-section">
-            <div>
-              <p class="eyebrow">Étape 1</p>
-              <h2>Choisir un modèle</h2>
-            </div>
-            <div class="template-grid" id="template-grid" role="radiogroup" aria-label="Modèles de prompt">
-              <label class="template-card">
-                <input type="radio" name="template" value="marketing" checked />
-                <span>Marketing</span>
-                <small>Campagnes, pages de vente, emails</small>
-              </label>
-              <label class="template-card">
-                <input type="radio" name="template" value="strategy" />
-                <span>Stratégie</span>
-                <small>Plans d'action, diagnostics, décisions</small>
-              </label>
-              <label class="template-card">
-                <input type="radio" name="template" value="coding" />
-                <span>Code</span>
-                <small>Développement, revue, debugging</small>
-              </label>
-              <label class="template-card">
-                <input type="radio" name="template" value="learning" />
-                <span>Apprentissage</span>
-                <small>Cours, exercices, explications</small>
-              </label>
-              <label class="template-card">
-                <input type="radio" name="template" value="analysis" />
-                <span>Analyse</span>
-                <small>Synthèse, comparaison, recherche</small>
-              </label>
-              <label class="template-card">
-                <input type="radio" name="template" value="creative" />
-                <span>Créatif</span>
-                <small>Idées, storytelling, scripts</small>
-              </label>
+      <section class="layout" aria-label="Interface du jeu de construction">
+        <aside class="panel controls-panel" aria-label="Commandes de construction">
+          <div class="panel__header">
+            <p class="eyebrow">Atelier</p>
+            <h2>Commandes</h2>
+          </div>
+
+          <div class="control-group">
+            <label for="brick-size">Taille de brique</label>
+            <select id="brick-size">
+              <option value="2x2">Carrée 2 × 2</option>
+              <option value="4x2" selected>Classique 4 × 2</option>
+              <option value="1x2">Fine 1 × 2</option>
+              <option value="1x1">Cube 1 × 1</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <span class="field-label">Couleur</span>
+            <div class="palette" id="palette" role="radiogroup" aria-label="Couleurs de brique">
+              <button class="color-swatch is-active" type="button" data-color="#f44336" aria-label="Rouge" style="--swatch: #f44336"></button>
+              <button class="color-swatch" type="button" data-color="#ffca28" aria-label="Jaune" style="--swatch: #ffca28"></button>
+              <button class="color-swatch" type="button" data-color="#1e88e5" aria-label="Bleu" style="--swatch: #1e88e5"></button>
+              <button class="color-swatch" type="button" data-color="#43a047" aria-label="Vert" style="--swatch: #43a047"></button>
+              <button class="color-swatch" type="button" data-color="#fb8c00" aria-label="Orange" style="--swatch: #fb8c00"></button>
+              <button class="color-swatch" type="button" data-color="#8e24aa" aria-label="Violet" style="--swatch: #8e24aa"></button>
             </div>
           </div>
 
-          <div class="form-section">
-            <div>
-              <p class="eyebrow">Étape 2</p>
-              <h2>Décrire le besoin</h2>
-            </div>
-            <div class="field-group">
-              <label for="objective">Objectif principal</label>
-              <textarea
-                id="objective"
-                name="objective"
-                rows="4"
-                placeholder="Ex. Rédiger une page de vente pour un nouveau coaching sportif"
-                required
-              ></textarea>
-            </div>
-
-            <div class="grid-two">
-              <div class="field-group">
-                <label for="audience">Audience</label>
-                <input
-                  id="audience"
-                  name="audience"
-                  type="text"
-                  placeholder="Ex. entrepreneurs débutants"
-                />
-              </div>
-
-              <div class="field-group">
-                <label for="tone">Ton souhaité</label>
-                <select id="tone" name="tone">
-                  <option value="professionnel et précis">Professionnel</option>
-                  <option value="créatif et inspirant">Créatif</option>
-                  <option value="simple et pédagogique">Pédagogique</option>
-                  <option value="convaincant et direct">Persuasif</option>
-                  <option value="chaleureux et empathique">Empathique</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid-two">
-              <div class="field-group">
-                <label for="format">Format de sortie</label>
-                <select id="format" name="format">
-                  <option value="une réponse structurée avec titres et listes à puces">Réponse structurée</option>
-                  <option value="un plan détaillé étape par étape">Plan détaillé</option>
-                  <option value="un tableau comparatif clair">Tableau comparatif</option>
-                  <option value="un script prêt à utiliser">Script</option>
-                  <option value="une checklist actionnable">Checklist</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="language">Langue</label>
-                <select id="language" name="language">
-                  <option value="français">Français</option>
-                  <option value="anglais">Anglais</option>
-                  <option value="espagnol">Espagnol</option>
-                  <option value="allemand">Allemand</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="field-group">
-              <label for="context">Contexte utile</label>
-              <textarea
-                id="context"
-                name="context"
-                rows="3"
-                placeholder="Ex. mon offre coûte 149 €, lancement prévu dans 2 semaines"
-              ></textarea>
-            </div>
-
-            <div class="grid-two">
-              <div class="field-group">
-                <label for="constraints">Contraintes ou éléments à éviter</label>
-                <input
-                  id="constraints"
-                  name="constraints"
-                  type="text"
-                  placeholder="Ex. éviter le jargon, rester sous 800 mots"
-                />
-              </div>
-              <div class="field-group">
-                <label for="must-have">Éléments indispensables</label>
-                <input
-                  id="must-have"
-                  name="mustHave"
-                  type="text"
-                  placeholder="Ex. inclure 3 exemples et un appel à l'action"
-                />
-              </div>
-            </div>
+          <div class="button-grid">
+            <button class="primary-button" id="rotate-brick" type="button">Pivoter la brique</button>
+            <button class="secondary-button" id="remove-mode" type="button" aria-pressed="false">Mode suppression</button>
+            <button class="secondary-button" id="save-build" type="button">Sauvegarder</button>
+            <button class="ghost-button" id="load-build" type="button">Charger</button>
+            <button class="ghost-button danger" id="reset-build" type="button">Réinitialiser</button>
           </div>
 
-          <div class="actions">
-            <button class="primary-button" type="submit">Générer mon prompt</button>
-            <button class="ghost-button" id="reset-button" type="button">Réinitialiser</button>
+          <div class="hint-box">
+            <strong>Astuce</strong>
+            <p>Clic gauche : poser ou enlever une brique. Glisser : tourner la caméra. Molette : zoomer.</p>
           </div>
-        </form>
+        </aside>
 
-        <aside class="result-card" aria-labelledby="result-title">
-          <div class="result-card__header">
-            <div>
-              <p class="eyebrow">Prompt prêt à copier</p>
-              <h2 id="result-title">Votre prompt</h2>
+        <section class="stage-card" aria-label="Zone de jeu 3D">
+          <div class="scene" id="scene" aria-label="Plateau LEGO 3D interactif">
+            <div class="world" id="world">
+              <div class="board" id="board"></div>
             </div>
-            <button class="secondary-button" id="copy-button" type="button">Copier</button>
           </div>
-
-          <div class="quality-card" aria-live="polite">
-            <div>
-              <span class="quality-card__label">Score qualité</span>
-              <strong id="quality-score">0%</strong>
-            </div>
-            <div class="quality-meter" aria-hidden="true">
-              <span id="quality-meter-fill"></span>
-            </div>
-            <p id="quality-tip">Ajoutez un objectif pour évaluer votre prompt.</p>
+          <div class="hud">
+            <span id="mode-label">Mode construction</span>
+            <span id="rotation-label">Rotation : 0°</span>
           </div>
+        </section>
 
-          <pre id="prompt-output" class="prompt-output" aria-live="polite">Remplissez le formulaire puis cliquez sur « Générer mon prompt ».</pre>
-          <p class="copy-status" id="copy-status" role="status"></p>
-
-          <div class="history-panel">
-            <div class="history-panel__header">
-              <h3>Historique</h3>
-              <button class="link-button" id="clear-history" type="button">Effacer</button>
-            </div>
-            <ul id="history-list" class="history-list" aria-label="Prompts récemment générés"></ul>
+        <aside class="panel missions-panel" aria-label="Défis de construction">
+          <div class="panel__header">
+            <p class="eyebrow">Défis</p>
+            <h2>Missions</h2>
+          </div>
+          <ul class="mission-list" id="mission-list">
+            <li data-mission="count">Pose 12 briques</li>
+            <li data-mission="height">Construis une tour de 4 niveaux</li>
+            <li data-mission="colors">Utilise 4 couleurs différentes</li>
+          </ul>
+          <div class="creation-card">
+            <span>Création actuelle</span>
+            <strong id="creation-title">Terrain vide</strong>
+            <p id="status-message">Sélectionnez une case lumineuse pour commencer.</p>
           </div>
         </aside>
       </section>
     </main>
 
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
