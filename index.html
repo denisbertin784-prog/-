@@ -3,103 +3,91 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Briques 3D — Jeu de construction LEGO</title>
+    <title>Stock Rustique — Ventes, Achats et Inventaire</title>
     <meta
       name="description"
-      content="Un mini jeu de construction LEGO en 3D : posez, colorez, pivotez et supprimez des briques sur une grille interactive."
+      content="Application simple pour gérer le stock, les achats et les ventes de vos produits rustiques."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="game-shell">
-      <section class="hero" aria-labelledby="game-title">
+    <main class="container">
+      <header class="hero">
         <div>
-          <p class="eyebrow">Mini jeu créatif</p>
-          <h1 id="game-title">Construisez votre monde LEGO en 3D.</h1>
-          <p class="hero__text">
-            Choisissez une couleur, une taille de brique, puis cliquez sur la plateforme
-            pour empiler vos constructions. Tournez la caméra, relevez des défis et
-            sauvegardez votre création dans le navigateur.
-          </p>
+          <p class="eyebrow">Gestion d'inventaire</p>
+          <h1>Stock Rustique</h1>
+          <p>Suivez vos produits, enregistrez vos achats et ventes, et visualisez votre stock en temps réel.</p>
         </div>
-        <div class="score-card" aria-live="polite">
-          <span class="score-card__label">Briques posées</span>
-          <strong id="brick-count">0</strong>
-          <span id="goal-label">Objectif : Maison arc-en-ciel</span>
-        </div>
+        <button id="reset-data" class="danger" type="button">Réinitialiser les données</button>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Nouveau produit</h2>
+          <form id="product-form" class="form">
+            <label>Nom
+              <input id="product-name" type="text" required placeholder="Ex: Pomme rustique" />
+            </label>
+            <label>Catégorie
+              <input id="product-category" type="text" placeholder="Ex: Fruits" />
+            </label>
+            <label>Prix unitaire (€)
+              <input id="product-price" type="number" min="0" step="0.01" required />
+            </label>
+            <button type="submit">Ajouter le produit</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2>Mouvement de stock</h2>
+          <form id="movement-form" class="form">
+            <label>Produit
+              <select id="movement-product" required></select>
+            </label>
+            <label>Type
+              <select id="movement-type" required>
+                <option value="purchase">Achat (+)</option>
+                <option value="sale">Vente (-)</option>
+              </select>
+            </label>
+            <label>Quantité
+              <input id="movement-qty" type="number" min="1" step="1" required />
+            </label>
+            <button type="submit">Enregistrer</button>
+          </form>
+          <p id="status" class="status">Ajoutez un produit pour commencer.</p>
+        </article>
+
+        <article class="card stats">
+          <h2>Tableau de bord</h2>
+          <div class="stats-grid">
+            <div><span>Produits</span><strong id="stat-products">0</strong></div>
+            <div><span>Unités en stock</span><strong id="stat-units">0</strong></div>
+            <div><span>Ventes (unités)</span><strong id="stat-sales">0</strong></div>
+            <div><span>Achats (unités)</span><strong id="stat-purchases">0</strong></div>
+          </div>
+        </article>
       </section>
 
-      <section class="layout" aria-label="Interface du jeu de construction">
-        <aside class="panel controls-panel" aria-label="Commandes de construction">
-          <div class="panel__header">
-            <p class="eyebrow">Atelier</p>
-            <h2>Commandes</h2>
-          </div>
+      <section class="card">
+        <h2>Stock actuel</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Catégorie</th>
+              <th>Prix</th>
+              <th>Stock</th>
+              <th>Valeur</th>
+            </tr>
+          </thead>
+          <tbody id="stock-table"></tbody>
+        </table>
+      </section>
 
-          <div class="control-group">
-            <label for="brick-size">Taille de brique</label>
-            <select id="brick-size">
-              <option value="2x2">Carrée 2 × 2</option>
-              <option value="4x2" selected>Classique 4 × 2</option>
-              <option value="1x2">Fine 1 × 2</option>
-              <option value="1x1">Cube 1 × 1</option>
-            </select>
-          </div>
-
-          <div class="control-group">
-            <span class="field-label">Couleur</span>
-            <div class="palette" id="palette" role="radiogroup" aria-label="Couleurs de brique">
-              <button class="color-swatch is-active" type="button" data-color="#f44336" aria-label="Rouge" style="--swatch: #f44336"></button>
-              <button class="color-swatch" type="button" data-color="#ffca28" aria-label="Jaune" style="--swatch: #ffca28"></button>
-              <button class="color-swatch" type="button" data-color="#1e88e5" aria-label="Bleu" style="--swatch: #1e88e5"></button>
-              <button class="color-swatch" type="button" data-color="#43a047" aria-label="Vert" style="--swatch: #43a047"></button>
-              <button class="color-swatch" type="button" data-color="#fb8c00" aria-label="Orange" style="--swatch: #fb8c00"></button>
-              <button class="color-swatch" type="button" data-color="#8e24aa" aria-label="Violet" style="--swatch: #8e24aa"></button>
-            </div>
-          </div>
-
-          <div class="button-grid">
-            <button class="primary-button" id="rotate-brick" type="button">Pivoter la brique</button>
-            <button class="secondary-button" id="remove-mode" type="button" aria-pressed="false">Mode suppression</button>
-            <button class="secondary-button" id="save-build" type="button">Sauvegarder</button>
-            <button class="ghost-button" id="load-build" type="button">Charger</button>
-            <button class="ghost-button danger" id="reset-build" type="button">Réinitialiser</button>
-          </div>
-
-          <div class="hint-box">
-            <strong>Astuce</strong>
-            <p>Clic gauche : poser ou enlever une brique. Glisser : tourner la caméra. Molette : zoomer.</p>
-          </div>
-        </aside>
-
-        <section class="stage-card" aria-label="Zone de jeu 3D">
-          <div class="scene" id="scene" aria-label="Plateau LEGO 3D interactif">
-            <div class="world" id="world">
-              <div class="board" id="board"></div>
-            </div>
-          </div>
-          <div class="hud">
-            <span id="mode-label">Mode construction</span>
-            <span id="rotation-label">Rotation : 0°</span>
-          </div>
-        </section>
-
-        <aside class="panel missions-panel" aria-label="Défis de construction">
-          <div class="panel__header">
-            <p class="eyebrow">Défis</p>
-            <h2>Missions</h2>
-          </div>
-          <ul class="mission-list" id="mission-list">
-            <li data-mission="count">Pose 12 briques</li>
-            <li data-mission="height">Construis une tour de 4 niveaux</li>
-            <li data-mission="colors">Utilise 4 couleurs différentes</li>
-          </ul>
-          <div class="creation-card">
-            <span>Création actuelle</span>
-            <strong id="creation-title">Terrain vide</strong>
-            <p id="status-message">Sélectionnez une case lumineuse pour commencer.</p>
-          </div>
-        </aside>
+      <section class="card">
+        <h2>Historique des mouvements</h2>
+        <ul id="history-list" class="history"></ul>
       </section>
     </main>
 
